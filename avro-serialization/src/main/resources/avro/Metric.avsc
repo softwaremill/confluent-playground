@@ -1,0 +1,9 @@
+{"namespace": "keyar.domain",
+  "type": "record",
+  "name": "Metric",
+  "fields": [
+    {"name": "ip", "type": "string"},
+    {"name": "name", "type": "string"},
+    {"name": "value",  "type": "float"}
+  ]
+}

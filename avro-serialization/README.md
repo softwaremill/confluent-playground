@@ -8,7 +8,7 @@ Also worth to watch an introduction to Confluent's Schema Registry to get a basi
 https://vimeo.com/167028700
 
 The corresponding blog post is available at:
-http://softwaremill.com/2016/08/dog-ate-my-schema
+https://softwaremill.com/dog-ate-my-schema
 
 # Prerequisites
 The Avro "specific" example relies on a class (Metric.class), which is auto-generated based on *src/main/resources/avro/Metric.avsc*.

@@ -1,0 +1,49 @@
+{
+  "servers": [
+    {
+      "port": "${port1}",
+      "host": "${url1}",
+      "alias": "java-consumer",
+      "queries": [
+        {
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+              "url": "${influxUrl}",
+              "database": "${influxDb}",
+              "username": "${influxUser}",
+              "password": "${influxPwd}"
+            }
+          ],
+          "obj": "java.lang:type=Memory",
+          "attr": [
+            "HeapMemoryUsage",
+            "NonHeapMemoryUsage"
+          ],
+          "resultAlias": "jvmMemory"
+        },
+        {
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+              "url": "${influxUrl}",
+              "database": "${influxDb}",
+              "username": "${influxUser}",
+              "password": "${influxPwd}"
+            }
+          ],
+          "obj": "kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*",
+          "attr": [
+            "bytes-consumed-rate",
+            "fetch-latency-avg",
+            "fetch-rate",
+            "records-lag-max",
+            "records-per-request-avg"
+          ],
+          "resultAlias": "ConsumerMetrics"
+        }
+      ],
+      "numQueryThreads": 2
+    }
+  ]
+}

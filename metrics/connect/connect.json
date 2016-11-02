@@ -1,0 +1,49 @@
+{
+  "servers": [
+    {
+      "port": "${port1}",
+      "host": "${url1}",
+      "alias": "kafka-connect",
+      "queries": [
+        {
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+              "url": "${influxUrl}",
+              "database": "${influxDb}",
+              "username": "${influxUser}",
+              "password": "${influxPwd}"
+            }
+          ],
+          "obj": "java.lang:type=Memory",
+          "attr": [
+            "HeapMemoryUsage",
+            "NonHeapMemoryUsage"
+          ],
+          "resultAlias": "kafkaConnectMemory"
+        },
+        {
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+              "url": "${influxUrl}",
+              "database": "${influxDb}",
+              "username": "${influxUser}",
+              "password": "${influxPwd}"
+            }
+          ],
+          "obj": "kafka.producer:type=producer-metrics,client-id=*",
+          "attr": [
+            "request-latency-avg",
+            "request-latency-max",
+            "request-rate",
+            "response-rate",
+            "incoming-byte-rate"
+          ],
+          "resultAlias": "ConnectMetrics"
+        }
+      ],
+      "numQueryThreads": 2
+    }
+  ]
+}

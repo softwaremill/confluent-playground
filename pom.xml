@@ -34,5 +34,12 @@
         <module>avro-serialization</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>http://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
 
 </project>

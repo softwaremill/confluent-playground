@@ -66,7 +66,7 @@ public class AvroGenericSenderTest {
         sender.close();
 
         // receive
-        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic);
+        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic, false);
         List<GenericRecord> results = receiver.receive();
         results.forEach(LOG::info);
 
@@ -152,7 +152,7 @@ public class AvroGenericSenderTest {
         Assert.assertEquals(topic, record.topic());
 
         // receive
-        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic);
+        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic, false);
         List<GenericRecord> results = receiver.receive();
         results.forEach(LOG::info);
 
@@ -182,7 +182,7 @@ public class AvroGenericSenderTest {
         Assert.assertEquals(topic, record.topic());
 
         // receive
-        Receiver<Object, String> receiver = new Receiver<>(topic);
+        Receiver<Object, String> receiver = new Receiver<>(topic, false);
         List<String> results = receiver.receive();
         results.forEach(LOG::info);
 

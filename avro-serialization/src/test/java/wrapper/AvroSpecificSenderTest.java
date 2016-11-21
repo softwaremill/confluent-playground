@@ -1,6 +1,7 @@
 package wrapper;
 
 import keyar.domain.Metric;
+import keyar.domain.MetricV2;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.specific.SpecificData;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -48,10 +49,11 @@ public class AvroSpecificSenderTest {
         record = (RecordMetadata) result3.get();
         Assert.assertEquals(topic, record.topic());
 
-        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic);
+        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic, true);
         List<GenericRecord> results = receiver.receive();
         results.forEach((result) -> {
-            Metric metric = (Metric) SpecificData.get().deepCopy(Metric.SCHEMA$, result);
+            LOG.info(result);
+            MetricV2 metric = (MetricV2) SpecificData.get().deepCopy(MetricV2.SCHEMA$, result);
             LOG.info(metric);
         });
 
@@ -60,7 +62,6 @@ public class AvroSpecificSenderTest {
         Assert.assertEquals("IP", results.get(0).get("ip").toString());
         Assert.assertEquals("ABC", results.get(0).get("name").toString());
         Assert.assertEquals(123f, results.get(0).get("value"));
-
     }
 
 }

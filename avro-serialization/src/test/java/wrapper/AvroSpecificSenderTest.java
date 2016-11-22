@@ -48,7 +48,7 @@ public class AvroSpecificSenderTest {
         record = (RecordMetadata) result3.get();
         Assert.assertEquals(topic, record.topic());
 
-        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic);
+        Receiver<Object, GenericRecord> receiver = new Receiver<>(topic, true);
         List<GenericRecord> results = receiver.receive();
         results.forEach((result) -> {
             Metric metric = (Metric) SpecificData.get().deepCopy(Metric.SCHEMA$, result);

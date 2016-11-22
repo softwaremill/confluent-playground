@@ -21,7 +21,7 @@ public class Receiver<K, V> {
 
     private final String topic;
 
-    public Receiver(String topic) {
+    public Receiver(String topic, boolean specificAvroReader) {
 
         this.topic = topic;
 
@@ -39,6 +39,7 @@ public class Receiver<K, V> {
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 io.confluent.kafka.serializers.KafkaAvroDeserializer.class);
         properties.put("schema.registry.url", "http://localhost:8081");
+        properties.put("specific.avro.reader", String.valueOf(specificAvroReader));
 
         this.consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(Arrays.asList(topic));

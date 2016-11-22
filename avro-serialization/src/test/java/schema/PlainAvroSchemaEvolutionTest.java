@@ -26,6 +26,7 @@ public class PlainAvroSchemaEvolutionTest {
         //given
         final File file = new File("target/metrics.avro");
         Metric oldMetric = new Metric("Ip", "MyName", 1.23f);
+        final String defaultTime = "12345";
 
         DatumWriter<Metric> metricWriter = new SpecificDatumWriter<>(Metric.class);
         DataFileWriter<Metric> dataFileWriter = new DataFileWriter<>(metricWriter);
@@ -40,13 +41,14 @@ public class PlainAvroSchemaEvolutionTest {
 
         //then
         final MetricV2 metricV2 = dataFileReader.next();
-        assertThat(metricV2.getTime().toString()).isEqualTo("12345");
+        assertThat(metricV2).isEqualTo(new MetricV2("Ip", "MyName", 1.23f, defaultTime));
     }
 
     @Test
     public void shouldDeserializePojoWithUnionsAndNewSchema() throws IOException {
         //given
         final File file = new File("target/messageToSend.avro");
+        String defaultAddressFrom = "andrzej@test.pl";
         Email email = new Email("addressTo", "title", "text");
         MessageToSend messageToSend = new MessageToSend("type", "correlationId", email);
 
@@ -64,6 +66,6 @@ public class PlainAvroSchemaEvolutionTest {
         final MessageToSendV2 messageToSendV2 = dataFileReader.next();
         //in case of new pojo name in union - it is necessary to provide an alias
         final EmailV2 emailV2 = (EmailV2) messageToSendV2.getPayload();
-        assertThat(emailV2.getAddressFrom().toString()).isEqualTo("andrzej@test.pl");
+        assertThat(emailV2).isEqualTo(new EmailV2(defaultAddressFrom, "addressTo", "title", "text"));
     }
 }

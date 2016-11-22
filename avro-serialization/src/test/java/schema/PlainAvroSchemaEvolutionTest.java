@@ -1,7 +1,6 @@
 package schema;
 
 import com.softwaremill.schema.Email;
-//import com.softwaremill.schema.EmailV2;
 import com.softwaremill.schema.EmailV2;
 import com.softwaremill.schema.MessageToSend;
 import com.softwaremill.schema.MessageToSendV2;
@@ -13,7 +12,6 @@ import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.avro.specific.SpecificDatumWriter;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.io.File;
@@ -64,7 +62,7 @@ public class PlainAvroSchemaEvolutionTest {
 
         //then
         final MessageToSendV2 messageToSendV2 = dataFileReader.next();
-        //in case of new pojo name in union - it is necessary to provide alias
+        //in case of new pojo name in union - it is necessary to provide an alias
         final EmailV2 emailV2 = (EmailV2) messageToSendV2.getPayload();
         assertThat(emailV2.getAddressFrom().toString()).isEqualTo("andrzej@test.pl");
     }
